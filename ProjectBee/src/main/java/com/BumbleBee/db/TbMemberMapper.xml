@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.BumbleBee.model.TbMemberDAO" > 
+
+  <insert id="register" parameterType="TbMemberDTO">
+  		insert into tbmember
+  		values(#{mbId},#{mbPw},#{mbName},#{mbAge},#{mbJob},#{mbRegion},#{mbTel},sysdate,'N')
+  </insert>
+  
+  <select id="login" parameterType="TbMemberDTO" resultType="TbMemberDTO">
+  		select * from tbmember 
+  		where mbid = #{mbId} and mbpw = #{mbPw}
+  </select>
+
+
+  <update id="modify" parameterType="TbMemberDTO">
+  		update tbmember
+  		set mbpw = #{mbPw}, mbname = #{mbName}, mbage = #{mbAge}, mbjob = #{mbJob}, mbregion = #{mbRegion}, mbtel = #{mbTel}
+  		where mbid = #{mbId}
+  </update>
+  
+  <!-- resulType쪽에 굳이 list를 명시할 필요는 없다.
+  	>>> 내가만든 나만의 자료형만 잡아주면 List로 담는 작업은
+  		mybatis가 자동으로 수행해준다!
+   -->
+  <select id="selectAll" resultType="TbMemberDTO">
+  	select * from tbmember
+  	where mbtype != 'A'
+  </select>
+  
+  <delete id="withdrawal">
+  	delete from tbmember
+  	where mbid = #{mbId}
+  </delete>
+  
+  
+</mapper>

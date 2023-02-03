@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.BumbleBee.model.TbBoardDAO" > 
+	<insert id="boardwrite" parameterType="TbBoardDTO">
+		insert into tbboard (boardtitle, boardcontent, boardfile, boarddt, mbid, boardviews, boardlikes)
+		values(#{boardTitle}, #{boardContent}, 'no file', sysdate ,#{mbId}, 0, 0)
+	</insert>
+  	
+  	<update id="boardmodify" parameterType="TbBoardDTO">
+  		update tbboard
+  		set boardtitle = #{boardTitle}, boardcontent = #{boardContent}
+  		where boardseq = #{boardSeq}
+  	</update>
+  	
+  	<delete id="boarddelete" parameterType="TbBoardDTO">
+  		delete from tbboard
+  		where boardseq = #{boardSeq}
+  	</delete>
+  	
+  	<update id="boardlikes" parameterType="TbBoardDTO">
+  		update tbboard
+  		set boardlikes = #{boardLikes}
+  		where boardseq = #{boardSeq}
+  	</update>
+  	
+  	<update id="boardviews" parameterType="TbBoardDTO">
+  		update tbboard
+  		set boardviews = #{boardViews}
+  		where boardseq = #{boardSeq}
+  	</update>
+  	
+  	<select id="boardselectall" resultType="TbBoardDTO">
+  		select * from tbboard order by boardseq
+  	</select>
+  	
+  	<select id="boardselect" parameterType="TbBoardDTO" resultType="TbBoardDTO">
+  		select * 
+  		from tbboard 
+  		where boardseq = #{boardSeq}
+  	</select>
+</mapper>

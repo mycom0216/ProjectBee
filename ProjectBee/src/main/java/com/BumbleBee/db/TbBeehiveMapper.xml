@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.BumbleBee.model.TbBeehiveDAO" > 
+	
+	<insert id="modify" parameterType="TbBeehiveDTO">
+		insert into tbbeehive (ownerid, BHWEIGHT, bhtemp, bhhumid, bhtime) 
+		values(#{ownerId},#{bhWeight}, #{bhTemp}, #{bhHumid}, sysdate)
+	</insert>
+	
+  	
+  	<select id="bhselect" resultType="TbBeehiveDTO">
+  	<![CDATA[
+  		select *
+  		from (
+            select *
+            from tbbeehive
+            order by bhseq desc
+        )
+  		where rownum <= 24
+  		]]>
+  	</select>
+  	
+  	<select id="bhselectone" resultType="TbBeehiveDTO">
+  	<![CDATA[
+  		select * 
+		from (select bhseq, bhweight, bhtemp, bhhumid
+  		from (select bhseq, bhweight, bhtemp, bhhumid from tbbeehive order by bhseq desc)
+  		where rownum <= 1)
+        order by bhseq
+        ]]>
+  	</select>
+  
+</mapper>
